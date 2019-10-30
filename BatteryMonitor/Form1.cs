@@ -15,9 +15,63 @@ namespace BatteryMonitor
         public Form1()
         {
             InitializeComponent();
+            Task.Delay(new TimeSpan(0, 0, 15)).ContinueWith(o=>{ closeApp(); });
+            label3.Text = GetBatteryStatus().ToString() + '%';
+            label4.Text = GetPowerSource();
+
+        }
+
+        private void closeApp()
+        {
+            throw new NotImplementedException();
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        public String GetPowerSource()
+        {
+            string strPowerLineStatus = "Default";
+            // Getting the current system power status.
+            switch (SystemInformation.PowerStatus.PowerLineStatus)
+            {
+                case PowerLineStatus.Offline:
+                    strPowerLineStatus = "Battery";
+                    break;
+                case PowerLineStatus.Online:
+                    strPowerLineStatus = "AC Power";
+                    break;
+                case PowerLineStatus.Unknown:
+                    strPowerLineStatus = "Unknown";
+                    break;
+            }
+            return strPowerLineStatus;
+        }
+        public float GetBatteryStatus()
+        {
+            float batterylife;
+            batterylife = SystemInformation.PowerStatus.BatteryLifePercent;
+            batterylife *= 100.0f;
+            return batterylife;
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }
